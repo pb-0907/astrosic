@@ -1,56 +1,273 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Astrosic Sneakers</title>
+  <title>Astrosic | Future of Sneakers</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700;900&display=swap" rel="stylesheet">
+
   <style>
-    body {margin:0;font-family:Arial;background:#111;color:white;text-align:center}
-    header {padding:20px;font-size:28px;font-weight:bold;letter-spacing:3px}
-    .hero {padding:100px 20px;background:linear-gradient(to right,#000,#333)}
-    .btn {background:white;color:black;padding:12px 25px;border-radius:25px;text-decoration:none;font-weight:bold}
-    .products {display:flex;flex-wrap:wrap;justify-content:center;padding:50px 20px}
-    .card {background:#222;margin:15px;padding:20px;border-radius:15px;width:250px}
-    footer {padding:20px;background:black;font-size:14px}
+    body{
+      margin:0;
+      font-family:'Montserrat',sans-serif;
+      background:#000;
+      color:white;
+      overflow-x:hidden;
+      scroll-behavior:smooth;
+    }
+
+    header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:20px 40px;
+      background:black;
+      position:fixed;
+      width:100%;
+      z-index:1000;
+    }
+
+    .logo{
+      font-weight:900;
+      letter-spacing:4px;
+    }
+
+    .cart{
+      cursor:pointer;
+    }
+
+    section{
+      padding:120px 40px;
+      text-align:center;
+    }
+
+    .hero{
+      height:100vh;
+      background:url("https://images.unsplash.com/photo-1606813907291-d86efa9b94db") center/cover fixed no-repeat;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      position:relative;
+    }
+
+    .hero::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:rgba(0,0,0,0.6);
+    }
+
+    .hero-content{
+      position:relative;
+      z-index:2;
+      animation:fadeUp 1.5s ease forwards;
+    }
+
+    h1{
+      font-size:60px;
+      font-weight:900;
+    }
+
+    .btn{
+      background:white;
+      color:black;
+      padding:14px 35px;
+      border-radius:30px;
+      text-decoration:none;
+      font-weight:700;
+      transition:0.3s;
+    }
+
+    .btn:hover{
+      background:#ccc;
+    }
+
+    .products{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:center;
+      gap:40px;
+      margin-top:50px;
+    }
+
+    .card{
+      width:280px;
+      background:#111;
+      border-radius:20px;
+      overflow:hidden;
+      transition:0.4s;
+      opacity:0;
+      transform:translateY(40px);
+    }
+
+    .card.show{
+      opacity:1;
+      transform:translateY(0);
+    }
+
+    .card img{
+      width:100%;
+      height:220px;
+      object-fit:cover;
+    }
+
+    .testimonial{
+      background:#111;
+      padding:30px;
+      border-radius:20px;
+      margin:20px;
+      display:inline-block;
+      max-width:250px;
+    }
+
+    .swot{
+      max-width:800px;
+      margin:auto;
+      text-align:left;
+      line-height:1.8;
+      opacity:0.8;
+    }
+
+    .email-box input{
+      padding:12px;
+      border-radius:20px;
+      border:none;
+      width:250px;
+      margin-right:10px;
+    }
+
+    footer{
+      padding:40px;
+      background:#000;
+      border-top:1px solid #222;
+    }
+
+    @keyframes fadeUp{
+      from{opacity:0;transform:translateY(40px);}
+      to{opacity:1;transform:translateY(0);}
+    }
+
+    .countdown{
+      font-size:28px;
+      margin-top:20px;
+      font-weight:700;
+    }
   </style>
 </head>
+
 <body>
 
-<header>ASTROSIC</header>
+<header>
+  <div class="logo">ASTROSIC</div>
+  <div class="cart">🛒 Cart (<span id="count">0</span>)</div>
+</header>
 
 <section class="hero">
-  <h1>Step Beyond Limits</h1>
-  <p>Premium Sneakers for the Bold Generation</p>
-  <a href="#" class="btn">Shop Now</a>
+  <div class="hero-content">
+    <h1>Step Beyond Limits</h1>
+    <p>Limited Edition Drop Live Soon</p>
+    <div class="countdown" id="timer"></div>
+    <br>
+    <a href="#collection" class="btn">Explore Collection</a>
+  </div>
 </section>
 
-<section class="products">
-  <div class="card">
-    <h3>Astrosic Nova</h3>
-    <p>₹8,999</p>
-  </div>
-  <div class="card">
-    <h3>Astrosic Orbit</h3>
-    <p>₹9,499</p>
-  </div>
-  <div class="card">
-    <h3>Astrosic Phantom</h3>
-    <p>₹10,999</p>
+<section id="collection">
+  <h2>Best Sellers</h2>
+  <div class="products">
+
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff">
+      <h3>Astrosic Nova</h3>
+      <p>₹8,999</p>
+      <button onclick="addToCart()">Add to Cart</button>
+    </div>
+
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1600185365483-26d7a4cc7519">
+      <h3>Astrosic Orbit</h3>
+      <p>₹9,499</p>
+      <button onclick="addToCart()">Add to Cart</button>
+    </div>
+
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1528701800489-20be4e2a04a6">
+      <h3>Astrosic Phantom</h3>
+      <p>₹10,999</p>
+      <button onclick="addToCart()">Add to Cart</button>
+    </div>
+
   </div>
 </section>
 
 <section>
-  <h2>About Astrosic</h2>
-  <p>Astrosic blends street culture with futuristic design, targeting Gen Z sneaker enthusiasts.</p>
+  <h2>Influencer Strategy</h2>
+  <p style="max-width:700px;margin:auto;opacity:0.8;">
+    Collaborations with fitness influencers, sneaker reviewers, and Instagram creators 
+    to drive brand awareness and viral engagement.
+  </p>
 </section>
 
 <section>
-  <h2>Digital Marketing Strategy</h2>
-  <p>Instagram Reels • Influencer Collaborations • Limited Drops • SEO for streetwear sneakers</p>
+  <h2>Customer Reviews</h2>
+  <div class="testimonial">“Feels like Nike but futuristic.”</div>
+  <div class="testimonial">“Best sneaker purchase of 2026.”</div>
+  <div class="testimonial">“Insane comfort and design.”</div>
+</section>
+
+<section>
+  <h2>Subscribe for Drops</h2>
+  <div class="email-box">
+    <input type="email" placeholder="Enter your email">
+    <a class="btn">Subscribe</a>
+  </div>
+</section>
+
+<section>
+  <h2>SWOT Analysis</h2>
+  <div class="swot">
+    <strong>Strengths:</strong> Strong digital branding, premium design, influencer collaborations.<br>
+    <strong>Weaknesses:</strong> New market entrant, limited retail presence.<br>
+    <strong>Opportunities:</strong> Growing sneaker culture in India and global streetwear demand.<br>
+    <strong>Threats:</strong> Competition from Nike, Adidas, Puma.
+  </div>
 </section>
 
 <footer>
-  © 2026 Astrosic Sneakers
+  © 2026 Astrosic Sneakers | Digital Marketing Academic Project
 </footer>
+
+<script>
+  let cartCount = 0;
+  function addToCart(){
+    cartCount++;
+    document.getElementById("count").innerText = cartCount;
+  }
+
+  // Countdown Timer (7 days)
+  let countDownDate = new Date().getTime() + (7*24*60*60*1000);
+  let x = setInterval(function() {
+    let now = new Date().getTime();
+    let distance = countDownDate - now;
+    let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    document.getElementById("timer").innerHTML = days + " Days Left";
+  }, 1000);
+
+  // Scroll Animation
+  let cards = document.querySelectorAll(".card");
+  window.addEventListener("scroll", function(){
+    cards.forEach(card=>{
+      let position = card.getBoundingClientRect().top;
+      let screenHeight = window.innerHeight;
+      if(position < screenHeight - 100){
+        card.classList.add("show");
+      }
+    });
+  });
+</script>
 
 </body>
 </html>
+
+
