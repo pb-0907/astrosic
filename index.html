@@ -43,7 +43,7 @@ nav a:hover{opacity:0.6;}
 /* HERO */
 .hero{
   height:100vh;
-  background:url("https://images.unsplash.com/photo-1606813907291-d86efa9b94db") center/cover fixed no-repeat;
+  background:url("https://images.unsplash.com/photo-1606813907291-d86efa9b94db?auto=format&fit=crop&w=1600&q=80") center/cover fixed no-repeat;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -99,6 +99,7 @@ section{
   border-radius:15px;
   overflow:hidden;
   transition:0.3s;
+  cursor:pointer;
 }
 
 .card:hover{transform:translateY(-10px);}
@@ -145,6 +146,25 @@ section{
 .total{
   margin-top:20px;
   font-weight:700;
+}
+
+/* MODAL */
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.8);
+  justify-content:center;
+  align-items:center;
+  z-index:3000;
+}
+
+.modal-content{
+  background:#111;
+  padding:30px;
+  width:350px;
+  border-radius:15px;
+  text-align:left;
 }
 
 /* EMAIL */
@@ -207,25 +227,25 @@ footer{
   <h2>Best Sellers</h2>
   <div class="products">
 
-    <div class="card">
-      <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff">
+    <div class="card" onclick="openProduct('Nova',8999,'Lightweight daily performance sneaker.')">
+      <img src="https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=crop&w=800&q=80">
       <h3>Astrosic Nova</h3>
       <p>₹8999</p>
-      <button onclick="addToCart('Nova',8999)">Add to Cart</button>
+      <button>Add to Cart</button>
     </div>
 
-    <div class="card">
-      <img src="https://images.unsplash.com/photo-1600185365483-26d7a4cc7519">
+    <div class="card" onclick="openProduct('Orbit',9499,'Futuristic street sneaker with premium cushioning.')">
+      <img src="https://images.unsplash.com/photo-1528701800489-20be4e2a04a6?auto=format&fit=crop&w=800&q=80">
       <h3>Astrosic Orbit</h3>
       <p>₹9499</p>
-      <button onclick="addToCart('Orbit',9499)">Add to Cart</button>
+      <button>Add to Cart</button>
     </div>
 
-    <div class="card">
-      <img src="https://images.unsplash.com/photo-1528701800489-20be4e2a04a6">
+    <div class="card" onclick="openProduct('Phantom',10999,'Elite sneaker engineered for speed and dominance.')">
+      <img src="https://images.unsplash.com/photo-1519744346363-df1c5e0e19f9?auto=format&fit=crop&w=800&q=80">
       <h3>Astrosic Phantom</h3>
       <p>₹10999</p>
-      <button onclick="addToCart('Phantom',10999)">Add to Cart</button>
+      <button>Add to Cart</button>
     </div>
 
   </div>
@@ -252,12 +272,41 @@ footer{
 
 <div class="toast" id="toast"></div>
 
+<div class="modal" id="productModal">
+  <div class="modal-content">
+    <h2 id="modalTitle"></h2>
+    <p id="modalDesc"></p>
+    <p><strong>Available Sizes:</strong> 7, 8, 9, 10</p>
+    <button class="btn" onclick="addModalToCart()">Add to Cart</button>
+    <button onclick="closeModal()">Close</button>
+  </div>
+</div>
+
 <script>
 let cart = [];
 let total = 0;
+let selectedProduct = null;
 
 function toggleCart(){
   document.getElementById("cartSidebar").classList.toggle("open");
+}
+
+function openProduct(name,price,desc){
+  selectedProduct = {name,price};
+  document.getElementById("modalTitle").innerText = name + " - ₹" + price;
+  document.getElementById("modalDesc").innerText = desc;
+  document.getElementById("productModal").style.display = "flex";
+}
+
+function closeModal(){
+  document.getElementById("productModal").style.display = "none";
+}
+
+function addModalToCart(){
+  if(selectedProduct){
+    addToCart(selectedProduct.name, selectedProduct.price);
+    closeModal();
+  }
 }
 
 function addToCart(name,price){
@@ -308,6 +357,8 @@ function showToast(message){
 
 </body>
 </html>
+
+
 
 
 
